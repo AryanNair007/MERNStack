@@ -1,14 +1,13 @@
 import express from 'express';
-import { config as dotenv } from 'dotenv'; dotenv();
+import { config } from 'dotenv'; config();
 import colors from 'colors';
 
-import router from './routes/goalsRoutes.js'
-import errorHandler from './middleware/errorMiddleware.js'
+import goalsRouter from './routes/goalsRoutes.js';
+import usersRouter from './routes/usersRoutes.js';
+import errorHandler from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 
-import mongoose from 'mongoose';
 connectDB();
-// mongoose.connect("mongodb://0.0.0.0:27017/Mernapp");
 
 const PORT = process.env.PORT || 5000;
 console.log(process.env.PORT)
@@ -18,7 +17,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/goals', router )
+app.use('/api/goals', goalsRouter )
+app.use('/api/users', usersRouter )
 
 app.use(errorHandler);
 
